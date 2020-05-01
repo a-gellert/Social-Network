@@ -31,12 +31,12 @@ namespace SocialNW.DAL.EF
             };
 
             string password = "123456wE!";
-            var result = userManager.Create(admin, password);
+            var result = userManager.CreateAsync(admin, password);
 
-            if (result.Succeeded)
+            if (result.IsCompleted)
             {
-                userManager.AddToRole(admin.Id, role1.Name);
-                userManager.AddToRole(admin.Id, role2.Name);
+                userManager.AddToRoleAsync(admin.Id, role1.Name);
+                userManager.AddToRoleAsync(admin.Id, role2.Name);
             }
 
             base.Seed(context);

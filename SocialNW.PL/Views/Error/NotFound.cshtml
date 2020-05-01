@@ -1,7 +1,16 @@
-﻿
-@{
+﻿@{
+    Layout = "~/Views/Shared/_FirstLayout.cshtml";
     ViewBag.Title = "NotFound";
 }
 
-<h2>NotFound</h2>
+<div class="cent color-text">
 
+
+    <h1 class="color-main">404</h1>
+
+    <h2>К сожалению, страница не найдена</h2>
+
+    <div>
+        @Html.ActionLink("На главную", "Index", "Home", "", new { @class = "color-pale" })
+    </div>
+</div>

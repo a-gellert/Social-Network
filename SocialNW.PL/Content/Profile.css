@@ -1,0 +1,46 @@
+﻿.profile {
+    display: grid;
+    grid-template-columns: 2fr 3fr 1fr;
+    grid-template-rows: 2fr 1fr 2fr;
+    margin: 0;
+}
+
+.photo {
+    grid-column-start: 1;
+    grid-row-start: 1;
+    grid-row-end: span 2;
+    background-color: aqua;
+    padding: 10px;
+    border-radius: 200px;
+}
+
+img {
+    max-width: 100%;
+}
+
+.friends {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-column-start: 1;
+    grid-row-start: 3;
+    background-color: snow;
+}
+
+.item {
+    border-radius: 3px;
+    box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+    margin: 5px 5px;
+    background-color: lightgray;
+    text-align: center;
+}
+
+.about {
+    background-color: lightgray;
+}
+
+.links {
+    grid-column-start: 2;
+    grid-row-start: 2;
+    background-color: chartreuse;
+}

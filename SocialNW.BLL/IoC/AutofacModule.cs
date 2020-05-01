@@ -14,7 +14,7 @@ namespace SocialNW.BLL.IoC
         }
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().WithParameter("connectionString", "SocialNW_DB");
+            builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().WithParameter("connectionString", "SocConnection");
         }
     }
 }

@@ -4,6 +4,7 @@ using SocialNW.DAL.Entities;
 using SocialNW.DAL.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -97,7 +98,24 @@ namespace SocialNW.DAL.Repositories
 
         public void Save()
         {
-            _db.SaveChanges();
+            string error;
+            try
+            {
+                _db.SaveChanges();
+            }
+            catch (DbEntityValidationException ex)
+            {
+                foreach (DbEntityValidationResult validationError in ex.EntityValidationErrors)
+                {
+                    error = validationError.Entry.Entity.ToString();
+
+                    foreach (DbValidationError err in validationError.ValidationErrors)
+                    {
+                        error += err.ErrorMessage;
+                    }
+                }
+
+            }
         }
     }
 }

@@ -10,14 +10,12 @@ namespace SocialNW.DAL.Entities
 {
     public class UserProfile
     {
-        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.None), Key]
+        [Key]
         [ForeignKey("AppUser")]
         public int Id { get; set; }
 
-        [Required]
         public string FirstName { get; set; }
 
-        [Required]
         public string LastName { get; set; }
         public DateTime? BirthDate { get; set; }
         public string Country { get; set; }

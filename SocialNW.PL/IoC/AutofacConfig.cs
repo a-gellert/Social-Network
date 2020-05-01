@@ -13,7 +13,7 @@ namespace SocialNW.PL.IoC
         {
             var builder = new ContainerBuilder();
             builder.RegisterControllers(typeof(MvcApplication).Assembly);
-            builder.RegisterModule(new AutofacModule("SocialDB"));
+            builder.RegisterModule(new AutofacModule("SocConnection"));
             builder.RegisterType<PostService>().As<IPostService>();
             builder.RegisterType<MessageService>().As<IMessageService>();
             builder.RegisterType<CommentService>().As<ICommentService>();

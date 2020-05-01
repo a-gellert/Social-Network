@@ -12,9 +12,9 @@ namespace SocialNW.DAL.EF
             Database.SetInitializer<SocialContext>(new DbInitializer());
         }
 
-        public SocialContext(string conectionString) : base(conectionString) { }
+        public SocialContext(string connectionString) : base(connectionString) { }
 
-        public SocialContext() : base("name=SocialNW_DB") { }
+        public SocialContext() : base("name=SocConnection") { }
 
 
 

@@ -1,7 +1,17 @@
 ﻿
+
 @{
     ViewBag.Title = "Forbidden";
 }
 
-<h2>Forbidden</h2>
+<div class="cent color-text">
 
+
+    <h1 class="color-main">403</h1>
+
+    <h2>Доступ запрещён!</h2>
+
+    <div>
+        @Html.ActionLink("На главную", "Index", "Home", "", new { @class = "color-pale" })
+    </div>
+</div>
