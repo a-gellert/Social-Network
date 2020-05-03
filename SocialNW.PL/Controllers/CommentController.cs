@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Web.Mvc;
 
 namespace SocialNW.PL.Controllers
-{
+{   [Authorize]
     public class CommentController : Controller
     {
         private ICommentService _commentService;
@@ -18,7 +18,7 @@ namespace SocialNW.PL.Controllers
         {
             _commentService = commentService;
         }
-        public ActionResult GetComments(int id)
+        public ActionResult GetComments(int? id)
         {
             var comments = _commentService.GetCommentsToPost(id);
 
@@ -49,7 +49,7 @@ namespace SocialNW.PL.Controllers
             {
                 ModelState.AddModelError("Text", "Can't create comment");
             }
-            return RedirectToAction("GetCommentsToPost");
+            return RedirectToAction("GetComments");
         }
     }
 }

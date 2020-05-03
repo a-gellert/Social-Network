@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace SocialNW.PL.Controllers
 {
+    [Authorize]
     public class MessageController : Controller
     {
         private IMessageService _messageService;
@@ -90,9 +91,9 @@ namespace SocialNW.PL.Controllers
                  JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult GetUserMessages(int id)
+        public ActionResult GetUserMessages()
         {
-            var messagesDto = _messageService.GetUserMessages(id);
+            var messagesDto = _messageService.GetUserMessages(User.Identity.GetUserId<int>());
             var mapper = new Mapper(new MapperConfiguration(cfg => cfg.CreateMap<MessageDTO, MessageViewModel>()));
             var messages = mapper.Map<IEnumerable<MessageDTO>, List<MessageViewModel>>(messagesDto);
 

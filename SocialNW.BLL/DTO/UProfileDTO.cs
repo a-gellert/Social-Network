@@ -1,5 +1,4 @@
-﻿using SocialNW.DAL.Entities;
-using System;
+﻿using System;
 
 namespace SocialNW.BLL.DTO
 {

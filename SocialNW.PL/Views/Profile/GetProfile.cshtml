@@ -1,0 +1,28 @@
+﻿@model SocialNW.PL.Models.ProfileViewModel
+@{
+    Layout = null;
+}
+<div class="modal-content">
+    <div class="modal-header">
+        <div class="row">
+            <button class="close" data-dismiss="modal" area-hidden="true">X</button>
+            <img src="@Url.Action("UserPhotos", "Profile", new { id = Model.Id})" height="58" width="58" />
+            @Html.DisplayFor(model => model.FirstName)
+            @Html.DisplayFor(model => model.LastName)
+        </div>
+    </div>
+    <div class="modal-body">
+        <dl class="dl-horizontal">
+            <dt>Birthdate:</dt>
+            <dd>@Html.DisplayFor(model => model.BirthDate)</dd>
+            <dt>Country:</dt>
+            <dd>@Html.DisplayFor(model => model.Country)</dd>
+            <dt>City:</dt>
+            <dd>@Html.DisplayFor(model => model.City)</dd>
+            <dt>Gender:</dt>
+            <dd>@Html.DisplayFor(model => model.Gender)</dd>
+            <dt>Phone:</dt>
+            <dd>@Html.DisplayFor(model => model.Phone)</dd>
+        </dl>
+    </div>
+</div>

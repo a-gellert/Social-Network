@@ -8,6 +8,6 @@ namespace SocialNW.PL.Models
         public string Text { get; set; }
         public DateTime? Date { get; set; }
         public int? AppUserId { get; set; }
-        
+        public virtual ProfileViewModel Profile { get; set; }
     }
 }

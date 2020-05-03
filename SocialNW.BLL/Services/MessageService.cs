@@ -22,7 +22,7 @@ namespace SocialNW.BLL.Services
 
         public int CountUnreadedMessages(int id)
         {
-            return _unitOfWork.Messages.GetAll().Where(x => x.Recipient.Id == id && x.IsReaded == false).ToList().Count;
+            return _unitOfWork.Messages.GetAll().ToList().Where(x => x.Recipient.Id == id && x.IsReaded == false).ToList().Count;
         }
         
         public void Dispose()
@@ -34,7 +34,7 @@ namespace SocialNW.BLL.Services
         {
             var config = new MapperConfiguration(cfg => cfg.CreateMap<Message, MessageDTO>());
             var mapper = new Mapper(config);
-            return mapper.Map<List<MessageDTO>>(_unitOfWork.Messages.GetAll()); ;
+            return mapper.Map<List<MessageDTO>>(_unitOfWork.Messages.GetAll().ToList()); ;
         }
 
         public MessageDTO GetById(int id)
@@ -44,15 +44,16 @@ namespace SocialNW.BLL.Services
                 throw new ValidationException("Message doesn't exist", "");
             var config = new MapperConfiguration(cfg => cfg.CreateMap<Message, MessageDTO>());
             var mapper = new Mapper(config);
-            return mapper.Map<MessageDTO>(_unitOfWork.Messages.GetAll()); ;
+            return mapper.Map<MessageDTO>(_unitOfWork.Messages.GetAll().ToList()); ;
 
         }
 
         public IEnumerable<MessageDTO> GetUserMessages(int id)
         {
-            var messages = _unitOfWork.Messages.GetAll().Where(x => x.ApplicationUserId == id || x.Recipient.Id == id)
-               .OrderByDescending(m => m.Date).ToList();
-            MarkMessagesAsReaded(id);
+            var messages = _unitOfWork.Messages.GetAll().ToList()
+                .Where(x => x.ApplicationUserId == id || x.Recipient.Id == id)
+                .OrderByDescending(m => m.Date).ToList();
+           MarkMessagesAsReaded(id);
 
             var config = new MapperConfiguration(cfg => cfg.CreateMap<Message, MessageDTO>());
             var mapper = new Mapper(config);
@@ -108,7 +109,7 @@ namespace SocialNW.BLL.Services
 
         private void MarkMessagesAsReaded(int id)
         {
-            var messages = _unitOfWork.Messages.GetAll().Where(x => x.Recipient.Id == id && x.IsReaded == false).ToList();
+            var messages = _unitOfWork.Messages.GetAll().ToList().Where(x => x.Recipient.Id == id && x.IsReaded == false).ToList();
             foreach (var message in messages)
             {
                 message.IsReaded = true;

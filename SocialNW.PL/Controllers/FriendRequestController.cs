@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace SocialNW.PL.Controllers
 {
+    [Authorize]
     public class FriendRequestController : Controller
     {
         private readonly IFriendService _friendService;

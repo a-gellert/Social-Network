@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNet.Identity.Owin;
+﻿using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using SocialNW.BLL.DTO;
 using SocialNW.BLL.Infrastructure;
 using SocialNW.BLL.Interfaces;
 using SocialNW.PL.Models;
+using System.IO;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
@@ -43,6 +45,7 @@ namespace SocialNW.PL.Controllers
             if (ModelState.IsValid)
             {
                 AppUserDTO userDto = new AppUserDTO { Email = model.Email, Password = model.Password };
+
                 ClaimsIdentity claim = await UserService.Authenticate(userDto);
                 if (claim == null)
                 {
@@ -71,15 +74,38 @@ namespace SocialNW.PL.Controllers
         {
             if (ModelState.IsValid)
             {
+
+                string fileName = HttpContext.Server.MapPath(@"~/Images/user.png");
+
+                byte[] imageData = null;
+                FileInfo fileInfo = new FileInfo(fileName);
+                long imageFileLength = fileInfo.Length;
+                FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read);
+                BinaryReader br = new BinaryReader(fs);
+                imageData = br.ReadBytes((int)imageFileLength);
+
                 AppUserDTO userDto = new AppUserDTO
                 {
                     Email = model.Email,
                     Password = model.Password,
-                    Role = "user"
+                    Role = "user",
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    Photo = imageData
                 };
+
                 OperationDetails operationDetails = await UserService.Create(userDto);
                 if (operationDetails.Succedeed)
-                    return View("SuccessRegister");
+                {
+                    AppUserDTO appUserDto = new AppUserDTO { Email = model.Email, Password = model.Password };
+                    ClaimsIdentity claim = await UserService.Authenticate(appUserDto);
+                    AuthenticationManager.SignOut();
+                    AuthenticationManager.SignIn(new AuthenticationProperties
+                    {
+                        IsPersistent = true
+                    }, claim);
+                    return RedirectToAction("Index", "Home");
+                }
                 else
                     ModelState.AddModelError(operationDetails.Property, operationDetails.Message);
             }

@@ -76,6 +76,7 @@
     <Compile Include="DTO\AppUserDTO.cs" />
     <Compile Include="DTO\CommentDTO.cs" />
     <Compile Include="DTO\FriendRequestDTO.cs" />
+    <Compile Include="DTO\Gender.cs" />
     <Compile Include="DTO\MessageDTO.cs" />
     <Compile Include="DTO\PostDTO.cs" />
     <Compile Include="DTO\UProfileDTO.cs" />

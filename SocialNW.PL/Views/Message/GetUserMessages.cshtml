@@ -1,0 +1,41 @@
+﻿
+@model IEnumerable<SocialNW.PL.Models.MessageViewModel>
+@using Microsoft.AspNet.Identity;
+
+@{
+    ViewBag.Title = "GetUserMessages";
+}
+<link type="text/css" rel="stylesheet" href="~/Content/MessageStyles.css" />
+<hr />
+<div class="container-fluid">
+    <div class="col-md-4">
+        @Html.Partial("_Menu")
+    </div>
+    <div class="col-md-8">
+        <a href="@Url.Action("GetAllUsers", "Home")" class="btn btn-success">
+            Write new message
+            <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+        </a> <br />
+        <h3>My messages</h3>
+        <div class="messages">
+            <ul class="list-unstyled">
+                @foreach (var message in Model)
+                {
+                    <li class="@(message.AppUserId == User.Identity.GetUserId<int>()? "outgoing":"incoming")">
+                        <p>
+                            <div class="row">
+                                <img src="@Url.Action("UserPhotos", "Profile", new { id = message.AppUserId})" height="58" width="58" id="profilePhoto" />
+                                @*<span class="author">@message.Profile.FirstName</span>*@
+                                send to <span class="author">@message.RecipientId</span>
+                                <span style="float:right" class="date">Written @message.Date</span>
+                            </div> <br />
+                            <span>@message.Text</span>
+                        </p>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>
+
+

@@ -7,7 +7,7 @@ namespace SocialNW.BLL.Interfaces
     {
         IEnumerable<CommentDTO> GetAll();
         void Create(CommentDTO comment);
-        IEnumerable<CommentDTO> GetCommentsToPost(int id);
+        IEnumerable<CommentDTO> GetCommentsToPost(int? id);
 
         void Dispose();
     }

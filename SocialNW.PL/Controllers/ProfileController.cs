@@ -12,6 +12,7 @@ using System.Web.Mvc;
 
 namespace SocialNW.PL.Controllers
 {
+    [Authorize]
     public class ProfileController : Controller
     {
         private  IProfileService _profileService;
@@ -79,7 +80,9 @@ namespace SocialNW.PL.Controllers
                 if (imageData != null)
                 {
                     profileDto.UserPhoto = imageData;
+
                 }
+
                 try
                 {
                     _profileService.Update(profileDto);

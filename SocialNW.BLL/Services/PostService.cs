@@ -83,7 +83,7 @@ namespace SocialNW.BLL.Services
         {
             var posts = _unitOfWork.Posts.GetAll().Where(x => x.AppUserId == id).OrderByDescending(x => x.Date).ToList();
 
-            var mapper = new Mapper(new MapperConfiguration(cfg => cfg.CreateMap<PostDTO, Post>()));
+            var mapper = new Mapper(new MapperConfiguration(cfg => cfg.CreateMap<Post, PostDTO>()));
             
             return mapper.Map<List<Post>, List<PostDTO>>(posts);
         }

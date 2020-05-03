@@ -1,50 +1,21 @@
-﻿@model SocialNW.PL.Models.CommentViewModel
+﻿@model IEnumerable<SocialNW.PL.Models.CommentViewModel>
 
 @{
-    ViewBag.Title = "GetComments";
+    Layout = null;
 }
-
-<h2>GetComments</h2>
-
-<div>
-    <h4>CommentViewModel</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Text)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Text)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CommentDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CommentDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PostId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PostId)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.AppUserId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.AppUserId)
-        </dd>
-
-    </dl>
+<div class="comments">
+    <ul class="list-unstyled">
+        @foreach (var comment in Model)
+        {
+            <li>
+                <p>
+                    <span>
+                        <img src="@Url.Action("UserPhotos", "Profile", new { id = comment.AppUserId})" height="35" width="35" id="navBarImg" />
+                    </span>
+                    <span class="no-pad-bottom date-posted">Posted @comment.CommentDate</span>
+                </p>
+                <p>@comment.Text</p>
+            </li>
+        }
+    </ul>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>

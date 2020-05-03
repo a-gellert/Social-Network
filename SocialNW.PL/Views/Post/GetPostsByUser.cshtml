@@ -1,0 +1,53 @@
+﻿@model IEnumerable<SocialNW.PL.Models.PostViewModel>
+@{
+    Layout = null;
+}
+@Styles.Render("~/Content/css")
+@Scripts.Render("~/bundles/modernizr")
+<ul class="posts">
+    @foreach (var post in Model)
+    {
+        <li>
+            <div class="row">
+                <span>
+                    <img src="@Url.Action("UserPhotos", "Profile", new { id = post.AppUserId})" height="35" width="35" id="navBarImg" />
+                </span>
+                <span class="username">@post.Name</span>
+                <span class="date-posted">Posted @post.Date</span>
+            </div>
+            <p> @post.Text </p>
+
+            @using (Ajax.BeginForm("Create", "Comment", null, new AjaxOptions
+            {
+                UpdateTargetId = "commentsTo-" + post.Id,
+                OnComplete = "OnComplete"
+            }, new { id = "add-comment-" + post.Id, @class = "add-comment" }))
+            {
+                <div class="row">
+                    <div class="col-md-9">
+                        <div class="form-group">
+                            <input type="hidden" id="postId" name="PostId" value='@post.Id' />
+                            <input type="hidden" id="ownerId" name="ownerId" value='@post.AppUserId' />
+                            <input type="text" class="form-control" name="comment" id="comment-@post.Id" placeholder="Add a comment" />
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <button class="btn btn-default" type="submit">Add Comment</button>
+                    </div>
+                </div>
+            }
+            <div id="commentsTo-@post.Id">
+                @{Html.RenderAction("GetComments", "Comment", new { id = post.Id });}
+            </div>
+        </li>
+    }
+</ul>
+<script>
+    var OnComplete = function () {
+        $("#comment-" + (this.id).substr(12)).val("");
+    }
+    $(document).ready(function () {
+        $(".commentToggleBtn").click(function () {
+            $("#add-comment-" + this.id).toggle();
+        });
+    });</script>

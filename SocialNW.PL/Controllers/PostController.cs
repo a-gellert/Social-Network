@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNet.Identity;
 using SocialNW.BLL.DTO;
 using SocialNW.BLL.Infrastructure;
 using SocialNW.BLL.Interfaces;
@@ -9,6 +10,7 @@ using System.Web.Mvc;
 
 namespace SocialNW.PL.Controllers
 {
+    [Authorize]
     public class PostController : Controller
     {
         private IPostService _postService;
@@ -26,17 +28,20 @@ namespace SocialNW.PL.Controllers
 
             return PartialView(postsViewModel);
         }
-
-        public ActionResult Create(PostViewModel model)
+        [HttpPost]
+        public ActionResult Create(FormCollection formCollection)
         {
             try
             {
-                var mapper = new Mapper(new MapperConfiguration(cfg => cfg.CreateMap<PostViewModel, PostDTO>()));
-                var postModel = mapper.Map<PostViewModel, PostDTO>(model);
-
-                _postService.Create(postModel);
+                PostDTO postDto = new PostDTO()
+                {
+                    Text = formCollection["Post"],
+                    Name = formCollection["name"],
+                    AppUserId = User.Identity.GetUserId<int>()
+                };
+                _postService.Create(postDto);
                 
-                return RedirectToAction("GetUserById", "Home");
+                return RedirectToAction("GetUserById","Home");
             }
             catch (Exception ex)
             {
@@ -45,7 +50,7 @@ namespace SocialNW.PL.Controllers
         }
 
 
-        public ActionResult GetPostByFriend(int id)
+        public ActionResult GetFriendsPosts(int id)
         {
             try
             {

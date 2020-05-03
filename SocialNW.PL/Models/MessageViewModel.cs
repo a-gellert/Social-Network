@@ -13,6 +13,9 @@ namespace SocialNW.PL.Models
         public int? RecipientId { get; set; }
         public bool IsReaded { get; set; }
 
+        public virtual ProfileViewModel Profile { get; set; }
+        public virtual ProfileViewModel Recipient { get; set; }
+
         public MessageViewModel()
         {
             Date = DateTime.Now;

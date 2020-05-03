@@ -1,0 +1,57 @@
+﻿@model IEnumerable<SocialNW.PL.Models.ProfileViewModel>
+@using Microsoft.AspNet.Identity;
+
+@{
+    ViewBag.Title = "GetUserFriends";
+}
+<div class="container-fluid">
+    <div class="col-md-3">
+        @Html.Partial("_Menu")
+    </div>
+    <div class="col-md-9">
+        @Html.Action("GetRequestsById", "FriendRequest", new { id = User.Identity.GetUserId<int>() })
+        @if (1 == 0)
+        {
+            <h3 style="text-align:center">You don't have any users in friendlist</h3>
+        }
+        else
+        {
+            <h3 style="text-align:center">List of friends</h3>
+
+            <table class="table">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.UserPhoto)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.LastName)
+                    </th>
+                    <th></th>
+                </tr>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            <img src="@Url.Action("UserPhotos", "Profile", new { id = item.Id})" height="58" width="58" id="profilePhoto" />
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FirstName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LastName)
+                        </td>
+                        <td>
+                            <a href="@Url.Action("Create", "Message", new { id = item.Id }, null)" class="btn btn-success">
+                                Send message
+                                <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </table>
+        }
+    </div>
+</div>

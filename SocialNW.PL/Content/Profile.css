@@ -5,16 +5,14 @@
     margin: 0;
 }
 
-.photo {
-    grid-column-start: 1;
-    grid-row-start: 1;
-    grid-row-end: span 2;
-    background-color: aqua;
+.prof-photo {
+    text-align:center;
     padding: 10px;
     border-radius: 200px;
 }
 
 img {
+   
     max-width: 100%;
 }
 

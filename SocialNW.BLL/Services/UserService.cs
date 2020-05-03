@@ -37,7 +37,7 @@ namespace SocialNW.BLL.Services
                 string error;
                 try
                 {
-                    user = new AppUser { Email = userDto.Email, UserName = userDto.Email, Profile = new UserProfile { FirstName = userDto.FirstName, LastName = userDto.LastName } };
+                    user = new AppUser { Email = userDto.Email, UserName = userDto.Email, Profile = new UserProfile { UserPhoto = userDto.Photo, FirstName = userDto.FirstName, LastName = userDto.LastName } };
                     await _unitOfWork.UserManager.CreateAsync(user, userDto.Password);
                     await _unitOfWork.UserManager.AddToRoleAsync(user.Id, userDto.Role);
                 }

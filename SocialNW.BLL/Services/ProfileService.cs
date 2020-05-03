@@ -46,24 +46,25 @@ namespace SocialNW.BLL.Services
             return mapper.Map<List<UserProfile>, List<UProfileDTO>>(fList);
         }
 
-        public IEnumerable<UProfileDTO> Search(string searchString, string city, string country)
+        public IEnumerable<UProfileDTO> Search(string searchString, string country, string city)
         {
             var users = _unitOfWork.Profiles.GetAll().ToList();
 
             if (!string.IsNullOrEmpty(searchString))
             {
-                users = users.Where(x => x.FirstName.Contains(searchString)).ToList();
-            }
-
-            if (!string.IsNullOrEmpty(city))
-            {
-                users = users.Where(x => x.City != null && x.City.Contains(city)).ToList();
+                users = users.Where(x => x.FirstName.ToUpper().Contains(searchString.ToUpper()) || x.LastName.ToUpper().Contains(searchString.ToUpper())).ToList();
             }
 
             if (!string.IsNullOrEmpty(country))
             {
-                users = users.Where(x => x.Country != null && x.Country.Contains(country)).ToList();
+                users = users.Where(x => x.Country != null && x.Country.ToUpper().Contains(country.ToUpper())).ToList();
             }
+
+            if (!string.IsNullOrEmpty(city))
+            {
+                users = users.Where(x => x.City != null && x.City.ToUpper().Contains(city.ToUpper())).ToList();
+            }
+
 
             var mapper = new Mapper(new MapperConfiguration(cfg => cfg.CreateMap<UserProfile, UProfileDTO>()));
 
@@ -74,7 +75,7 @@ namespace SocialNW.BLL.Services
         {
             try
             {
-                var mapper = new Mapper(new MapperConfiguration(cfg => cfg.CreateMap<UserProfile, UProfileDTO>()));
+                var mapper = new Mapper(new MapperConfiguration(cfg => cfg.CreateMap<UProfileDTO, UserProfile>()));
                 var newProfile = mapper.Map<UProfileDTO, UserProfile>(profileDto);
                 _unitOfWork.Profiles.Update(newProfile);
                 _unitOfWork.Save();

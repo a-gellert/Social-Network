@@ -16,6 +16,7 @@ namespace SocialNW.PL.App_Start
         IServiceCreator serviceCreator = new ServiceCreator();
         public void Configuration(IAppBuilder app)
         {
+            app.MapSignalR();
             app.CreatePerOwinContext<IUserService>(CreateUserService);
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {

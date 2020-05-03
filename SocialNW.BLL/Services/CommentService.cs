@@ -45,7 +45,7 @@ namespace SocialNW.BLL.Services
             }
         }
 
-        public IEnumerable<CommentDTO> GetCommentsToPost(int id)
+        public IEnumerable<CommentDTO> GetCommentsToPost(int? id)
         {
             var comments = _unitOfWork.Comments.GetAll().Where(x => x.PostId == id).OrderByDescending(x => x.CommentDate).ToList();
 
