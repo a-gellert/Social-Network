@@ -39,21 +39,26 @@ namespace SocialNW.BLL.Services
 
         public void Create(int userId, int friendUserId)
         {
-            try
+            var requests = _unitOfWork.Requests.GetAll().Where(x => x.AppUserId == userId && x.RequestedTo == friendUserId).ToList();
+            if (requests.Count == 0 && userId != friendUserId)
             {
-                var request = new FriendRequest()
+                try
                 {
-                    AppUserId = userId,
-                    RequestedTo = friendUserId,
-                    Date = DateTime.Now
-                };
-                _unitOfWork.Requests.Create(request);
-                _unitOfWork.Save();
+                    var request = new FriendRequest()
+                    {
+                        AppUserId = userId,
+                        RequestedTo = friendUserId,
+                        Date = DateTime.Now
+                    };
+                    _unitOfWork.Requests.Create(request);
+                    _unitOfWork.Save();
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
             }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+           
         }
 
         public void Dispose()
@@ -66,9 +71,9 @@ namespace SocialNW.BLL.Services
 
             var requests = _unitOfWork.Requests.GetAll().Where(x => x.RequestedTo == id && x.IsAccepted == false).ToList();
 
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<FriendRequest, FriendRequestDTO>());
-            var mapper = new Mapper(config);
-            return mapper.Map<List<FriendRequestDTO>>(_unitOfWork.Comments.GetAll()); ;
+            var mapper = new Mapper(new MapperConfiguration(cfg => cfg.CreateMap<FriendRequest, FriendRequestDTO>()));
+
+            return mapper.Map<IEnumerable<FriendRequest>, List < FriendRequestDTO >> (requests); ;
             
         }
 

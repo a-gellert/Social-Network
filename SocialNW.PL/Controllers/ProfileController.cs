@@ -108,7 +108,7 @@ namespace SocialNW.PL.Controllers
             }
             else
             {
-                string fileName = HttpContext.Server.MapPath(@"~/Images/noImg.png");
+                string fileName = HttpContext.Server.MapPath(@"~/Images/user.png");
 
                 byte[] imageData = null;
                 FileInfo fileInfo = new FileInfo(fileName);

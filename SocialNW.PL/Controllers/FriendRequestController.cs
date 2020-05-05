@@ -19,9 +19,9 @@ namespace SocialNW.PL.Controllers
             _friendService = friendService;
         }
 
-        public ActionResult GetRequestsById(int id)
+        public ActionResult GetRequestsById()
         {
-            var requestsDto = _friendService.GetRequestsById(id);
+            var requestsDto = _friendService.GetRequestsById(User.Identity.GetUserId<int>());
             var mapper = new Mapper(new MapperConfiguration(cfg => cfg.CreateMap<FriendRequestDTO, FriendRequestViewModel>()));
             var friendRequests = mapper.Map<IEnumerable<FriendRequestDTO>, List<FriendRequestViewModel>>(requestsDto);
             
